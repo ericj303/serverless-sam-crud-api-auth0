@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  icecream-service
+
+Resources:
+  IceCreamFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: icecream.service.resource.StreamLambdaHandler::handleRequest
+      Runtime: java8
+      Timeout: 25
+      Policies: 
+        - DynamoDBCrudPolicy:
+            TableName: !Ref OrdersTable
+      MemorySize: 512
+      Events:
+        HttpApiEvent:
+          Type: HttpApi
+          Properties:
+            TimeoutInMillis: 20000
+            PayloadFormatVersion: '1.0'
+
+  OrdersTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: orders
+      PrimaryKey:
+        Name: Id
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+
+  IceCreamApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      StageName: Prod
