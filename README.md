@@ -30,6 +30,7 @@ The first command will build the source of your application. The second command 
 * **Save arguments to samconfig.toml**: If set to yes, your choices will be saved to a configuration file inside the project, so that in the future you can just re-run `sam deploy` without parameters to deploy changes to your application.
 
 Here is an example of the correct responses.  If you simply hit enter, then the value in ["value"] brackets is used.
+
 Stack Name [icecream-service]:
 
 AWS Region [us-east-2]: 
